@@ -1,0 +1,12 @@
+.canvas {
+    width: 75%;
+    margin: 0px auto;
+    text-align: center;
+    font-style: italic;
+}
+
+#canvas {
+    border: 1px solid blue;
+    width: 100%;
+    height: 40vmin;
+}
