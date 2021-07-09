@@ -25,8 +25,8 @@ var rightPressed = false;
 // Brick Variables
 var brickRowCount = 3;
 var brickColumnCount = 5;
-var brickWidth = 75;
-var brickHeight = 20;
+var brickWidth = 40;
+var brickHeight = 10;
 var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
