@@ -1,27 +1,100 @@
 var canvas = document.getElementById('canvas');
-
 var ctx = canvas.getContext('2d');
 
 
-// ctx.moveTo(0,0)
-// ctx.lineTo(200,100);
-// ctx.stroke();
+var x = canvas.width/2;
+var y = canvas.height-30;
+var dx = 1;
+var dy = -1;
+
+var ballRadius = 10;
+
+var paddleHeight = 10;
+var paddleWidth = 75;
+var paddleX = (canvas.width-paddleWidth) / 2;
 
 
-// ctx.beginPath();
-// ctx.arc(95, 50, 40, 0, 2 * Math.PI);
-// ctx.str
+var leftPressed = false; 
+var rightPressed = false;
 
-// ctx.font = "14px Arial";
-// ctx.fillText('Hi from Canvas', 40, 40);
+function drawBall(){
+    // draw a ball 
+    ctx.beginPath();
+    ctx.arc(x, y, ballRadius, 0, Math.PI*2)
+    ctx.fillStyle = 'red';
+    ctx.fill();
+    ctx.closePath();
+}
 
-// ctx.font = "24px Arial";
-// ctx.strokeText("Hello from inside canvas", 30, 100);
+function drawPaddle(){
+    ctx.beginPath();
+    ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
 
-// var grd = ctx.createLinearGradient(75, 50, 5, 90, 60, 100);
 
-// grd.addColorStop(0, "red");
-// grd.addColorStop(1, "white");
+function draw() {
+    // drawing code
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBall();
+    drawPaddle();
 
-// ctx.fillStyle = grd;
-// ctx.fillRect(10,10,150,80);
+
+    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+    dx = -dx;
+}
+    if(y + dy < ballRadius) {
+    dy = -dy;
+    } else if(y + dy > canvas.height-ballRadius) {
+           if(x > paddleX && x < paddleX + paddleWidth) {
+        dy = -dy;
+        }
+        else {
+            alert("GAME OVER");
+            document.location.reload();
+            clearInterval(interval);
+        }
+    }
+
+    if(rightPressed) {
+    paddleX += 5;
+    if (paddleX + paddleWidth > canvas.width){
+        paddleX = canvas.width - paddleWidth;
+    }
+    }
+    else if(leftPressed) {
+        paddleX -= 5;
+        if (paddleX < 0){
+            paddleX = 0;
+        }
+    }
+        
+    x += dx;
+    y += dy;
+}
+
+document.addEventListener("keydown", keyDownHandler, false)
+document.addEventListener("keyup", keyUpHandler, false)
+
+function keyDownHandler(e){
+    if(e.key == "Right" || e.key == "ArrowRight"){
+        rightPressed = true;
+    }else if (e.key == "Left" || e.key == "ArrowLeft"){
+        leftPressed = true;
+    }
+}
+
+function keyUpHandler(e){
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = false;
+    }
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = false;
+    }
+}
+
+console.log(rightPressed, leftPressed)
+
+var interval = setInterval(draw, 10)
