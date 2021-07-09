@@ -45,18 +45,27 @@ function draw() {
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
     dx = -dx;
 }
-    if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+    if(y + dy < ballRadius) {
+    dy = -dy;
+    } else if(y + dy > canvas.height-ballRadius) {
+           if(x > paddleX && x < paddleX + paddleWidth) {
         dy = -dy;
+        }
+        else {
+            alert("GAME OVER");
+            document.location.reload();
+            clearInterval(interval);
+        }
     }
 
     if(rightPressed) {
-    paddleX += 7;
+    paddleX += 5;
     if (paddleX + paddleWidth > canvas.width){
         paddleX = canvas.width - paddleWidth;
     }
     }
     else if(leftPressed) {
-        paddleX -= 7;
+        paddleX -= 5;
         if (paddleX < 0){
             paddleX = 0;
         }
@@ -88,4 +97,4 @@ function keyUpHandler(e){
 
 console.log(rightPressed, leftPressed)
 
-setInterval(draw, 10)
+var interval = setInterval(draw, 10)
