@@ -35,6 +35,9 @@ var brickOffsetLeft = 30;
 // bricks in a 2 demensional array
 var bricks = [];
 
+var score = 0;
+
+
 
 function drawBall(){
     // draw a ball 
@@ -65,6 +68,7 @@ function collisionDetection() {
                 if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
                     dy = -dy;
                     b.status = 0;
+                    score++;
                 }
             }
 
@@ -72,6 +76,11 @@ function collisionDetection() {
     }
 }
 
+function drawScore(){
+    ctx.font("16px Arial");
+    ctx.fillStyle = 'black';
+    ctx.fillText('Score: '+score, 8, 20);
+}
 
 
 document.addEventListener("keydown", keyDownHandler, false)
@@ -129,6 +138,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
     drawPaddle();
+    drawScore();
     collisionDetection();
     drawBricks();
 
