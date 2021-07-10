@@ -54,6 +54,24 @@ function drawPaddle(){
 }
 
 
+// checking collision
+
+function collisionDetection() {
+    for(var c=0; c<brickColumnCount; c++) {
+        for(var r=0; r<brickRowCount; r++) {
+            var b = bricks[c][r];
+            // calculations
+            if(b.status == 1){
+                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                    dy = -dy;
+                    b.status = 0;
+                }
+            }
+
+        }
+    }
+}
+
 
 
 document.addEventListener("keydown", keyDownHandler, false)
@@ -66,6 +84,7 @@ function keyDownHandler(e){
         leftPressed = true;
     }
 }
+
 
 function keyUpHandler(e){
     if(e.key == "Right" || e.key == "ArrowRight") {
@@ -80,7 +99,7 @@ for(var c = 0; c < brickColumnCount; c++){
     bricks[c] = [];
 
     for (var r = 0; r < brickRowCount; r++){
-        bricks[c][r] = {x: 0, y: 0};
+        bricks[c][r] = {x: 0, y: 0, status: 1};
     }
 }
 
@@ -88,6 +107,7 @@ for(var c = 0; c < brickColumnCount; c++){
 function drawBricks(){
     for(var c= 0; c < brickColumnCount; c++){
         for(var r= 0; r < brickRowCount; r++){
+            if(bricks[c][r].status == 1){
             var brickX = (c*(brickWidth + brickPadding)) + brickOffsetLeft;
             var brickY = (r*(brickHeight + brickPadding)) + brickOffsetTop;
 
@@ -99,17 +119,22 @@ function drawBricks(){
             ctx.fill();
             ctx.closePath();
         }
+        }
     }
 }
+
 
 function draw() {
     // drawing code
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
     drawPaddle();
+    collisionDetection();
     drawBricks();
 
 
+    // Bouncing off the walls code
+    
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
     dx = -dx;
     }
@@ -142,7 +167,5 @@ function draw() {
     x += dx;
     y += dy;
 }
-
-console.log(rightPressed, leftPressed)
 
 var interval = setInterval(draw, 10)
