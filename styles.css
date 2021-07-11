@@ -1,11 +1,4 @@
-.canvas-container {
-    text-align: center;
-    font-style: italic;
-    border: 2px solid red;;
-}
-
-#canvas {
-    background-color:aqua;
-    width: 75%;
-    height: 50%;
+canvas {
+    border: 1px solid blue;
+    margin: 0px auto;
 }

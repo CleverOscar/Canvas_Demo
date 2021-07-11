@@ -5,16 +5,18 @@ var ctx = canvas.getContext('2d');
 
 var x = canvas.width/2;
 var y = canvas.height-30;
-var dx = 1;
+
+// speed of the ball
+var dx = 3;
 var dy = -1;
 
 // ball variable
-var ballRadius = 10;
+var ballRadius = 8;
 
 
 // Paddle varibales
 var paddleHeight = 10;
-var paddleWidth = 75;
+var paddleWidth = 70;
 var paddleX = (canvas.width-paddleWidth) / 2;
 
 // Paddle button control Variabels
@@ -23,13 +25,13 @@ var rightPressed = false;
 
 
 // Brick Variables
-var brickRowCount = 3;
+var brickRowCount = 5;
 var brickColumnCount = 5;
-var brickWidth = 40;
+var brickWidth = 70;
 var brickHeight = 10;
-var brickPadding = 10;
+var brickPadding = 20;
 var brickOffsetTop = 30;
-var brickOffsetLeft = 30;
+var brickOffsetLeft = 20;
 
 
 // bricks in a 2 demensional array
@@ -90,6 +92,7 @@ function drawScore(){
 
 document.addEventListener("keydown", keyDownHandler, false)
 document.addEventListener("keyup", keyUpHandler, false)
+document.addEventListener("mousemove", mouseMoveHandler, false)
 
 function keyDownHandler(e){
     if(e.key == "Right" || e.key == "ArrowRight"){
@@ -106,6 +109,14 @@ function keyUpHandler(e){
     }
     else if(e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = false;
+    }
+}
+
+function mouseMoveHandler(e){
+    var relativeX = e.clientX - canvas.offsetLeft;
+
+    if(relativeX > 0 && relativeX < canvas.width){
+        paddleX = relativeX - paddleWidth/2;
     }
 }
 
