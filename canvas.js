@@ -7,7 +7,7 @@ var x = canvas.width/2;
 var y = canvas.height-30;
 
 // speed of the ball
-var dx = 3;
+var dx = 5;
 var dy = -1;
 
 // ball variable
